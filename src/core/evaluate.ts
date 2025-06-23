@@ -1,5 +1,5 @@
-import { getValue } from "../utils/getValue";
-import { AtomicCondition, Condition, ObjectPaths } from "../types";
+import { getValue } from '../utils/getValue';
+import { AtomicCondition, Condition, ObjectPaths } from '../types';
 
 /**
  * Evaluates a single, type-safe atomic condition against an object.
@@ -11,42 +11,42 @@ import { AtomicCondition, Condition, ObjectPaths } from "../types";
  */
 export const evaluateAtomicCondition = <T, P extends ObjectPaths<T>>(
   object: T,
-  condition: AtomicCondition<T, P>
+  condition: AtomicCondition<T, P>,
 ): boolean => {
   const { key, op, value } = condition;
   const targetValue = getValue(object, key);
 
   switch (op) {
-    case "eq":
+    case 'eq':
       return targetValue === value;
-    case "neq":
+    case 'neq':
       return targetValue !== value;
-    case "lt":
+    case 'lt':
       return targetValue < value;
-    case "lte":
+    case 'lte':
       return targetValue <= value;
-    case "gt":
+    case 'gt':
       return targetValue > value;
-    case "gte":
+    case 'gte':
       return targetValue >= value;
-    case "in":
-    case "contains":
+    case 'in':
+    case 'contains':
       return Array.isArray(targetValue) && targetValue.includes(value);
-    case "nin":
+    case 'nin':
       return !Array.isArray(targetValue) || !targetValue.includes(value);
-    case "hasSize":
+    case 'hasSize':
       return Array.isArray(targetValue) && targetValue.length === value;
-    case "containsAny":
+    case 'containsAny':
       return (
         Array.isArray(targetValue) &&
         Array.isArray(value) &&
-        value.some((v) => targetValue.includes(v))
+        value.some(v => targetValue.includes(v))
       );
-    case "containsAll":
+    case 'containsAll':
       return (
         Array.isArray(targetValue) &&
         Array.isArray(value) &&
-        value.every((v) => targetValue.includes(v))
+        value.every(v => targetValue.includes(v))
       );
     default:
       return false;
@@ -61,17 +61,14 @@ export const evaluateAtomicCondition = <T, P extends ObjectPaths<T>>(
  * @param condition The condition to evaluate.
  * @returns `true` if the condition is met, `false` otherwise.
  */
-export const evaluateCondition = <T>(
-  object: T,
-  condition: Condition<T>
-): boolean => {
-  if ("logic" in condition) {
+export const evaluateCondition = <T>(object: T, condition: Condition<T>): boolean => {
+  if ('logic' in condition) {
     const { logic, conditions } = condition;
 
-    if (logic === "and") {
-      return conditions.every((child) => evaluateCondition(object, child));
+    if (logic === 'and') {
+      return conditions.every(child => evaluateCondition(object, child));
     }
-    return conditions.some((child) => evaluateCondition(object, child));
+    return conditions.some(child => evaluateCondition(object, child));
   }
   return evaluateAtomicCondition(object, condition as AtomicCondition<T>);
-}; 
+};

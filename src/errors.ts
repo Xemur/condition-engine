@@ -5,6 +5,6 @@
 export class ConditionParsingError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "ConditionParsingError";
+    this.name = 'ConditionParsingError';
   }
-} 
+}

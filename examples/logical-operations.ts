@@ -1,44 +1,44 @@
-import { evaluateCondition, Condition } from "../src";
+import { evaluateCondition, Condition } from '../src';
 
 const user = {
-  name: "Jane Doe",
+  name: 'Jane Doe',
   age: 28,
   isVerified: true,
-  plan: "premium",
-  roles: ["user", "writer"],
+  plan: 'premium',
+  roles: ['user', 'writer'],
 };
 
 type User = typeof user;
 
 const andCondition: Condition<User> = {
-  logic: "and",
+  logic: 'and',
   conditions: [
-    { key: "$.age", op: "gt", value: 25 },
-    { key: "$.plan", op: "eq", value: "premium" },
+    { key: '$.age', op: 'gt', value: 25 },
+    { key: '$.plan', op: 'eq', value: 'premium' },
   ],
 };
 console.log(evaluateCondition(user, andCondition)); // true
 
 const orCondition: Condition<User> = {
-  logic: "or",
+  logic: 'or',
   conditions: [
-    { key: "$.name", op: "eq", value: "John Doe" },
-    { key: "$.isVerified", op: "eq", value: true },
+    { key: '$.name', op: 'eq', value: 'John Doe' },
+    { key: '$.isVerified', op: 'eq', value: true },
   ],
 };
 console.log(evaluateCondition(user, orCondition)); // true
 
 const nestedCondition: Condition<User> = {
-  logic: "and",
+  logic: 'and',
   conditions: [
-    { key: "$.isVerified", op: "eq", value: true },
+    { key: '$.isVerified', op: 'eq', value: true },
     {
-      logic: "or",
+      logic: 'or',
       conditions: [
-        { key: "$.age", op: "lt", value: 20 },
-        { key: "$.roles", op: "contains", value: "writer" },
+        { key: '$.age', op: 'lt', value: 20 },
+        { key: '$.roles', op: 'contains', value: 'writer' },
       ],
     },
   ],
 };
-console.log(evaluateCondition(user, nestedCondition)); // true 
+console.log(evaluateCondition(user, nestedCondition)); // true

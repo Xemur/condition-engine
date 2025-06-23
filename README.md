@@ -45,22 +45,22 @@ const user: User = {
   tags: ['developer', 'typescript'],
   profile: {
     isActive: true,
-    lastLogin: '2024-01-15'
-  }
+    lastLogin: '2024-01-15',
+  },
 };
 
 // A simple atomic condition
 // ✅ TypeScript provides autocompletion for keys and enforces correct value types
 const isAdult = evaluateCondition(user, {
-  key: '$.age',        // Autocompleted: '$.name' | '$.age' | '$.tags' | '$.profile.isActive' | etc.
+  key: '$.age', // Autocompleted: '$.name' | '$.age' | '$.tags' | '$.profile.isActive' | etc.
   operator: 'gte',
-  value: 18            // Must be number (inferred from '$.age' type)
+  value: 18, // Must be number (inferred from '$.age' type)
 });
 
 const hasTypescriptTag = evaluateCondition(user, {
-  key: '$.tags',       // Autocompleted from User interface
+  key: '$.tags', // Autocompleted from User interface
   operator: 'contains',
-  value: 'typescript'  // Must be string (inferred from '$.tags' element type)
+  value: 'typescript', // Must be string (inferred from '$.tags' element type)
 });
 
 // ❌ TypeScript prevents type mismatches at compile time
@@ -100,22 +100,22 @@ const product = {
   tags: ['portable', 'work', 'gaming'],
   specs: {
     ram: 16,
-    storage: 512
-  }
+    storage: 512,
+  },
 };
 
 // Numeric comparison
 const isExpensive = evaluateCondition(product, {
   key: '$.price',
   operator: 'gt',
-  value: 500
+  value: 500,
 });
 
 // Nested object access
 const hasEnoughRAM = evaluateCondition(product, {
   key: '$.specs.ram',
   operator: 'gte',
-  value: 8
+  value: 8,
 });
 ```
 
@@ -130,8 +130,8 @@ const premiumLaptop = evaluateCondition(product, {
   conditions: [
     { key: '$.category', operator: 'eq', value: 'electronics' },
     { key: '$.price', operator: 'gt', value: 800 },
-    { key: '$.specs.ram', operator: 'gte', value: 16 }
-  ]
+    { key: '$.specs.ram', operator: 'gte', value: 16 },
+  ],
 });
 
 // OR logic
@@ -139,8 +139,8 @@ const budgetOrGaming = evaluateCondition(product, {
   operator: 'or',
   conditions: [
     { key: '$.price', operator: 'lt', value: 500 },
-    { key: '$.tags', operator: 'contains', value: 'gaming' }
-  ]
+    { key: '$.tags', operator: 'contains', value: 'gaming' },
+  ],
 });
 
 // Nested conditions: Mix AND/OR logic for complex business rules
@@ -156,20 +156,20 @@ const targetCustomer = evaluateCondition(product, {
           operator: 'and',
           conditions: [
             { key: '$.price', operator: 'lt', value: 600 },
-            { key: '$.tags', operator: 'contains', value: 'portable' }
-          ]
+            { key: '$.tags', operator: 'contains', value: 'portable' },
+          ],
         },
         // ...or high-performance
         {
           operator: 'and',
           conditions: [
             { key: '$.specs.ram', operator: 'gte', value: 16 },
-            { key: '$.specs.storage', operator: 'gte', value: 512 }
-          ]
-        }
-      ]
-    }
-  ]
+            { key: '$.specs.storage', operator: 'gte', value: 512 },
+          ],
+        },
+      ],
+    },
+  ],
 });
 
 // Deep nesting: Complex user eligibility check
@@ -185,8 +185,8 @@ const eligibleUser = evaluateCondition(user, {
           operator: 'and',
           conditions: [
             { key: '$.age', operator: 'gte', value: 25 },
-            { key: '$.tags', operator: 'containsAny', value: ['premium', 'enterprise'] }
-          ]
+            { key: '$.tags', operator: 'containsAny', value: ['premium', 'enterprise'] },
+          ],
         },
         // Developer path
         {
@@ -197,14 +197,14 @@ const eligibleUser = evaluateCondition(user, {
               operator: 'or', // Nested OR within AND within OR
               conditions: [
                 { key: '$.tags', operator: 'contains', value: 'typescript' },
-                { key: '$.tags', operator: 'contains', value: 'javascript' }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+                { key: '$.tags', operator: 'contains', value: 'javascript' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
 });
 ```
 
@@ -217,29 +217,29 @@ const user = {
   skills: ['javascript', 'typescript', 'react'],
   projects: [
     { name: 'Project A', status: 'completed' },
-    { name: 'Project B', status: 'in-progress' }
-  ]
+    { name: 'Project B', status: 'in-progress' },
+  ],
 };
 
 // Check array size
 const hasMultipleSkills = evaluateCondition(user, {
   key: '$.skills',
   operator: 'hasSize',
-  value: 3
+  value: 3,
 });
 
 // Check if array contains any of the values
 const hasWebSkills = evaluateCondition(user, {
   key: '$.skills',
   operator: 'containsAny',
-  value: ['react', 'vue', 'angular']
+  value: ['react', 'vue', 'angular'],
 });
 
 // Check if array contains all values
 const hasFullStackSkills = evaluateCondition(user, {
   key: '$.skills',
   operator: 'containsAll',
-  value: ['javascript', 'typescript']
+  value: ['javascript', 'typescript'],
 });
 ```
 
@@ -255,8 +255,8 @@ const conditionData = {
   logic: 'and',
   conditions: [
     { key: '$.age', op: 'gte', value: 18 },
-    { key: '$.status', op: 'eq', value: 'active' }
-  ]
+    { key: '$.status', op: 'eq', value: 'active' },
+  ],
 };
 
 const user = { age: 25, status: 'active', name: 'Alice' };
@@ -283,17 +283,17 @@ const complexCondition = {
       logic: 'and',
       conditions: [
         { key: '$.age', op: 'lt', value: 18 },
-        { key: '$.status', op: 'eq', value: 'minor' }
-      ]
+        { key: '$.status', op: 'eq', value: 'minor' },
+      ],
     },
     {
-      logic: 'and', 
+      logic: 'and',
       conditions: [
         { key: '$.age', op: 'gte', value: 18 },
-        { key: '$.status', op: 'eq', value: 'active' }
-      ]
-    }
-  ]
+        { key: '$.status', op: 'eq', value: 'active' },
+      ],
+    },
+  ],
 };
 
 try {
@@ -307,6 +307,7 @@ try {
 ## Available Operators
 
 ### Comparison Operators
+
 - `eq`: Equal to
 - `neq`: Not equal to
 - `lt`: Less than
@@ -315,6 +316,7 @@ try {
 - `gte`: Greater than or equal to
 
 ### Array Operators
+
 - `in`: Value is in array
 - `nin`: Value is not in array
 - `contains`: Array contains value (alias for `in`)
@@ -323,6 +325,7 @@ try {
 - `containsAll`: Array contains all provided values
 
 ### Logical Operators
+
 - `and`: All conditions must be true
 - `or`: At least one condition must be true
 
@@ -335,22 +338,22 @@ const data = {
   user: {
     profile: {
       settings: {
-        theme: 'dark'
-      }
-    }
+        theme: 'dark',
+      },
+    },
   },
   posts: [
     { title: 'First Post', published: true },
-    { title: 'Draft', published: false }
-  ]
+    { title: 'Draft', published: false },
+  ],
 };
 
 // Access nested properties
-'$.user.profile.settings.theme'  // 'dark'
+('$.user.profile.settings.theme'); // 'dark'
 
 // Access array elements
-'$.posts[0].title'               // 'First Post'
-'$.posts[1].published'           // false
+('$.posts[0].title'); // 'First Post'
+('$.posts[1].published'); // false
 ```
 
 ## Type Safety
@@ -373,28 +376,28 @@ const user: User = {
   name: 'John',
   email: 'john@example.com',
   preferences: { theme: 'dark', notifications: true },
-  tags: ['admin', 'developer']
+  tags: ['admin', 'developer'],
 };
 
 // ✅ Valid: Correct types and paths with nested conditions
 const validConditions = evaluateCondition(user, {
   operator: 'and',
   conditions: [
-    { key: '$.id', operator: 'gt', value: 0 },                    // number > number
+    { key: '$.id', operator: 'gt', value: 0 }, // number > number
     { key: '$.preferences.theme', operator: 'eq', value: 'dark' }, // 'light'|'dark' === 'dark'
-    { key: '$.tags', operator: 'contains', value: 'admin' }        // string[] contains string
-  ]
+    { key: '$.tags', operator: 'contains', value: 'admin' }, // string[] contains string
+  ],
 });
 
 // ❌ TypeScript Errors: Invalid paths and incompatible types
 const invalidConditions = evaluateCondition(user, {
   operator: 'or',
   conditions: [
-    { key: '$.invalidProp', operator: 'eq', value: 'test' },      // Error: Property doesn't exist
+    { key: '$.invalidProp', operator: 'eq', value: 'test' }, // Error: Property doesn't exist
     { key: '$.preferences.theme', operator: 'eq', value: 'blue' }, // Error: 'blue' not assignable to 'light'|'dark'
-    { key: '$.name', operator: 'gt', value: 100 },                // Error: string field compared to number
-    { key: '$.tags', operator: 'contains', value: 123 }           // Error: number not assignable to string
-  ]
+    { key: '$.name', operator: 'gt', value: 100 }, // Error: string field compared to number
+    { key: '$.tags', operator: 'contains', value: 123 }, // Error: number not assignable to string
+  ],
 });
 ```
 
@@ -411,7 +414,7 @@ try {
   const result = evaluateCondition(user, {
     key: '$.age',
     operator: 'invalid_operator', // Invalid operator
-    value: 18
+    value: 18,
   });
 } catch (error) {
   if (error instanceof ConditionParsingError) {
@@ -431,4 +434,4 @@ try {
 
 ## License
 
-MIT License - see the [LICENSE](LICENSE) file for details. 
+MIT License - see the [LICENSE](LICENSE) file for details.

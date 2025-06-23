@@ -1,16 +1,16 @@
-import { parseAndEvaluate, ConditionParsingError } from "../src";
+import { parseAndEvaluate, ConditionParsingError } from '../src';
 
 const user = {
-  name: "John Doe",
+  name: 'John Doe',
   age: 30,
   isVerified: true,
 };
 
 const untypedCondition = {
-  logic: "and",
+  logic: 'and',
   conditions: [
-    { key: "$.age", op: "gte", value: 21 },
-    { key: "$.isVerified", op: "eq", value: true },
+    { key: '$.age', op: 'gte', value: 21 },
+    { key: '$.isVerified', op: 'eq', value: true },
   ],
 };
 
@@ -24,10 +24,10 @@ try {
 }
 
 const invalidUntypedCondition = {
-  logic: "or",
+  logic: 'or',
   conditions: [
-    { key: "$.age", operator: "gt", value: 40 },
-    { key: "$.name", op: "equals", value: "John" },
+    { key: '$.age', operator: 'gt', value: 40 },
+    { key: '$.name', op: 'equals', value: 'John' },
   ],
 };
 
@@ -37,4 +37,4 @@ try {
   if (e instanceof ConditionParsingError) {
     console.error(e.message);
   }
-} 
+}

@@ -1,10 +1,6 @@
-import {
-  ConditionSchema,
-  UntypedCondition,
-  Condition,
-} from "../types";
-import { evaluateCondition } from "./evaluate";
-import { ConditionParsingError } from "../errors";
+import { ConditionSchema, UntypedCondition, Condition } from '../types';
+import { evaluateCondition } from './evaluate';
+import { ConditionParsingError } from '../errors';
 
 /**
  * Parses an unknown condition object using Zod and then evaluates it against an object.
@@ -16,18 +12,10 @@ import { ConditionParsingError } from "../errors";
  * @returns `true` if the parsed condition is met, `false` otherwise.
  * @throws {ConditionParsingError} If the `untypedCondition` does not match the ConditionSchema.
  */
-export const parseAndEvaluate = <T>(
-  object: T,
-  untypedCondition: unknown
-): boolean => {
+export const parseAndEvaluate = <T>(object: T, untypedCondition: unknown): boolean => {
   const parseResult = ConditionSchema.safeParse(untypedCondition);
   if (!parseResult.success) {
-    throw new ConditionParsingError(
-      `Invalid condition format: ${parseResult.error.message}`
-    );
+    throw new ConditionParsingError(`Invalid condition format: ${parseResult.error.message}`);
   }
-  return evaluateCondition(
-    object,
-    parseResult.data as UntypedCondition as Condition<T>
-  );
-}; 
+  return evaluateCondition(object, parseResult.data as UntypedCondition as Condition<T>);
+};

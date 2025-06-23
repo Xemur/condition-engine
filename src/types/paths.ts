@@ -9,8 +9,8 @@ type GetValue<T, P extends string> = P extends `${infer K}[${string}]`
       : never
     : never
   : P extends keyof T
-  ? T[P]
-  : never;
+    ? T[P]
+    : never;
 
 /**
  * @internal
@@ -23,23 +23,20 @@ type GetValue<T, P extends string> = P extends `${infer K}[${string}]`
 export type ValueByPath<T, P extends string> = P extends `$.${infer Rest}`
   ? ValueByPath<T, Rest>
   : P extends `${infer K}.${infer Rest}`
-  ? ValueByPath<GetValue<T, K>, Rest>
-  : GetValue<T, P>;
+    ? ValueByPath<GetValue<T, K>, Rest>
+    : GetValue<T, P>;
 
 /**
  * @internal
  * A utility type that generates all possible dot-notation paths for a given object type T.
  */
-type Paths<T, Prefix extends string = ""> = T extends object
+type Paths<T, Prefix extends string = ''> = T extends object
   ? {
       [K in keyof T & string]: T[K] extends (infer U)[]
-        ?
-            | `${Prefix}${K}`
-            | `${Prefix}${K}[${number}]`
-            | Paths<U, `${Prefix}${K}[${number}].`>
+        ? `${Prefix}${K}` | `${Prefix}${K}[${number}]` | Paths<U, `${Prefix}${K}[${number}].`>
         : T[K] extends object
-        ? `${Prefix}${K}` | Paths<T[K], `${Prefix}${K}.`>
-        : `${Prefix}${K}`;
+          ? `${Prefix}${K}` | Paths<T[K], `${Prefix}${K}.`>
+          : `${Prefix}${K}`;
     }[keyof T & string]
   : never;
 
@@ -50,4 +47,4 @@ type Paths<T, Prefix extends string = ""> = T extends object
  * type User = { name: string; address: { city: string } };
  * type UserPaths = ObjectPaths<User>; // "$.name" | "$.address" | "$.address.city"
  */
-export type ObjectPaths<T> = `$.${Paths<T>}`; 
+export type ObjectPaths<T> = `$.${Paths<T>}`;

@@ -1,17 +1,13 @@
-import { ObjectPaths, ValueByPath } from "./paths";
-import type { BaseAtomicCondition } from "./schemas";
-import {
-  CommonOperator,
-  NonArrayOperator,
-  ArrayOperator,
-} from "../operators";
+import { ObjectPaths, ValueByPath } from './paths';
+import type { BaseAtomicCondition } from './schemas';
+import { CommonOperator, NonArrayOperator, ArrayOperator } from '../operators';
 
 /**
  * @internal
  * The base interface for a logical condition, used for building the recursive Zod schema.
  */
 export interface BaseLogicalCondition {
-  logic: "and" | "or";
+  logic: 'and' | 'or';
   conditions: Array<BaseAtomicCondition | BaseLogicalCondition>;
 }
 
@@ -26,15 +22,15 @@ type ArrayCondition<T, P extends ObjectPaths<T>> =
       value: ValueByPath<T, P>;
     }
   | {
-      op: Extract<ArrayOperator, "in" | "nin" | "contains">;
+      op: Extract<ArrayOperator, 'in' | 'nin' | 'contains'>;
       value: ValueByPath<T, P> extends (infer U)[] ? U : never;
     }
   | {
-      op: Extract<ArrayOperator, "hasSize">;
+      op: Extract<ArrayOperator, 'hasSize'>;
       value: number;
     }
   | {
-      op: Extract<ArrayOperator, "containsAny" | "containsAll">;
+      op: Extract<ArrayOperator, 'containsAny' | 'containsAll'>;
       value: ValueByPath<T, P>;
     };
 
@@ -44,21 +40,16 @@ type ArrayCondition<T, P extends ObjectPaths<T>> =
  * @template T The type of the object being evaluated.
  * @template P The specific path within the object.
  */
-export type AtomicCondition<
-  T,
-  P extends ObjectPaths<T> = ObjectPaths<T>
-> = {
+export type AtomicCondition<T, P extends ObjectPaths<T> = ObjectPaths<T>> = {
   key: P;
-} & (ValueByPath<T, P> extends any[]
-  ? ArrayCondition<T, P>
-  : NonArrayCondition<T, P>);
+} & (ValueByPath<T, P> extends any[] ? ArrayCondition<T, P> : NonArrayCondition<T, P>);
 
 /**
  * Represents a logical condition (`and` / `or`) that groups other conditions.
  * @template T The type of the object being evaluated.
  */
 export interface LogicalCondition<T> {
-  logic: "and" | "or";
+  logic: 'and' | 'or';
   conditions: Array<Condition<T>>;
 }
 
@@ -67,5 +58,5 @@ export interface LogicalCondition<T> {
  * @template T The type of the object being evaluated.
  */
 export type Condition<T> =
-  | ({ [P in ObjectPaths<T>]: AtomicCondition<T, P> }[ObjectPaths<T>])
-  | LogicalCondition<T>; 
+  | { [P in ObjectPaths<T>]: AtomicCondition<T, P> }[ObjectPaths<T>]
+  | LogicalCondition<T>;
