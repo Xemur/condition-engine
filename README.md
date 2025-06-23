@@ -79,7 +79,7 @@ console.log(hasTypescriptTag); // true
 - **Type Safety**: Full TypeScript support with autocompletion for object paths
 - **Runtime Validation**: Parse and validate conditions from external sources
 - **Flexible Path Access**: Support for nested objects and arrays using dot notation
-- **Rich Operators**: Comparison, array, and logical operators
+- **100% Test Coverage**: Ensuring reliability
 
 ## Usage
 
