@@ -406,16 +406,18 @@ const invalidConditions = evaluateCondition(user, {
 The library provides clear error messages for invalid conditions:
 
 ```typescript
-import { evaluateCondition, ConditionParsingError } from 'condition-engine';
+import { parseAndEvaluate, ConditionParsingError } from 'condition-engine';
 
 const user = { age: 25, name: 'John' };
 
+const condition = {
+  key: '$.age',
+  operator: 'invalid_operator',
+  value: 18,
+}; // simulating a condition stored in the database => runtime validation
+
 try {
-  const result = evaluateCondition(user, {
-    key: '$.age',
-    operator: 'invalid_operator', // Invalid operator
-    value: 18,
-  });
+  const result = parseAndEvaluate(user, condition);
 } catch (error) {
   if (error instanceof ConditionParsingError) {
     console.log('Condition evaluation failed:', error.message);
