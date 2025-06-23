@@ -19,6 +19,11 @@
       "limit": "10 KB"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xemur/condition-engine.git"
+  },
+  "homepage": "https://github.com/Xemur/condition-engine#readme",
   "keywords": [],
   "author": "",
   "license": "MIT",
