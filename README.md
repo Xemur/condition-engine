@@ -81,6 +81,11 @@ console.log(hasTypescriptTag); // true
 - **Flexible Path Access**: Support for nested objects and arrays using dot notation
 - **100% Test Coverage**: Ensuring reliability
 
+## 📦 Bundle Size
+
+- **Ultra-lightweight**: 144 bytes with all dependencies minified and brotlied
+- Measured with [`size-limit`](https://github.com/ai/size-limit)
+
 ## Usage
 
 ### Basic Conditions
